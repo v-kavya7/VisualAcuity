@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visual Acuity Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightcyan;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            padding: 20px 0;
+        }
+        p{
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: black;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Visual Acuity Test</h1>
+    <p>Please enter the smallest line you can read on the Snellen chart:</p>
+    <form id="acuityForm">
+        <label for="line">Line:</label><br>
+        <input type="text" id="line" name="line"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('acuityForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var line = document.getElementById('line').value;
+            var acuity;
+            switch(line) {
+                case '20/200':
+                    acuity = 'Low vision';
+                    break;
+                case '20/40':
+                    acuity = 'Below average vision';
+                    break;
+                case '20/20':
+                    acuity = 'Normal vision';
+                    break;
+                case '20/10':
+                    acuity = 'Above average vision';
+                    break;
+                default:
+                    acuity = 'Invalid input';
+            }
+            document.getElementById('result').textContent = 'Your visual acuity is: ' + acuity;
+        });
+    </script>
+</body>
+</html>

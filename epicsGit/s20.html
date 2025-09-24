@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Acuity Test</title>
+<style>
+body {
+background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsaLNaC7hL5ztUoaHXmxMG2ar8SnKqlCphuVX6NhsIxFwghz3GEAfOMbIQgEyo-5eiRo0&usqp=CAU);
+background-size: cover;
+/* height: 100%;
+width: 100%; */
+font-family: Arial, sans-serif;
+color: #333; /* Default text color */
+text-shadow: black; /* Text shadow for contrast */
+/* display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+*/
+text-align: center;
+}
+h1, p, #result {
+color: black; /* Text color for headings and result */
+text-align: center;
+padding: 20px 0;
+}
+form {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+}
+input[type="text"] {
+padding: 10px;
+width: 200px;
+border: 1px black;
+border-radius: 4px;
+}
+input[type="submit"] {
+padding: 10px 20px;
+border: none;
+border-radius: 4px;
+background-color: #4CAF50;
+color: black;
+cursor: pointer;
+}
+input[type="submit"]:hover {
+background-color: #45a049;
+}
+#letterDisplay {
+font-size: 72pt; /* Initial font size */
+color: BLACK;
+margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<h1>VISUAL ACUITY TEST</h1>
+<p>Enter the letters shown below:</p>
+<form id="acuityForm">
+<label for="letters">Letters:</label><br>
+<input type="text" id="letters" name="letters"><br>
+<input type="submit" value="Submit">
+</form>
+<div id="letterDisplay"></div>
+<p id="result"></p>
+<script>
+var lettersArray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var fontSizes = [333.73, 181.79, 116.78, 83.14, 66.51, 49.88, 33.25, 26.38]; // Snellen chart
+var acuityLevels = ['20/200', '20/100', '20/70', '20/50', '20/40', '20/30', '20/20', '20/15'];
+var acuityDescriptions = {
+'20/200': 'very Low vision',
+'20/100': 'low vision',
+'20/70': 'below average vision',
+'20/50': 'average vision',
+'20/40': 'above average vision',
+'20/30': 'good vision',
+'20/20': 'normal vision',
+'20/15': 'excellent vision'
+};
+var currentFontSizeIndex = 0;
+var correctCount = 0;
+var attemptCount = 0;
+var totalCorrect = 0;
+function generateRandomLetters(length) {
+var result = '';
+var charactersLength = lettersArray.length;
+for (var i = 0; i < length; i++) {
+result += lettersArray.charAt(Math.floor(Math.random() * charactersLength));
+}
+return result;
+}
+function displayRandomLetters() {
+var randomLetters = generateRandomLetters(5);
+var letterDisplay = document.getElementById('letterDisplay');
+letterDisplay.textContent = randomLetters;
+letterDisplay.style.fontSize = fontSizes[currentFontSizeIndex] + 'pt';
+attemptCount = 0;
+}
+document.getElementById('acuityForm').addEventListener('submit', function(event) {
+event.preventDefault();
+var userLetters = document.getElementById('letters').value.trim().toUpperCase();
+var displayedLetters = document.getElementById('letterDisplay').textContent.trim();
+if (userLetters === displayedLetters) {
+document.getElementById('result').textContent = 'Correct! Moving to the next set of letters.';
+correctCount++;
+totalCorrect++;
+if (correctCount >= 4 || (correctCount % 2 === 0 && correctCount < 4)) {
+if (currentFontSizeIndex < fontSizes.length - 1) {
+currentFontSizeIndex++;
+}
+}
+displayRandomLetters();
+} else {
+attemptCount++;
+document.getElementById('result').textContent = 'Incorrect. Please try again. Attempt:' + attemptCount;
+if (attemptCount >= 4) {
+var acuity = acuityDescriptions[acuityLevels[currentFontSizeIndex]] || 'Invalid input';
+document.getElementById('result').textContent = 'You have reached the maximum attempts. Your visual acuity is: ' + acuity;
+document.getElementById('acuityForm').style.display = 'none';
+}
+}
+document.getElementById('letters').value = '';
+});
+displayRandomLetters();
+</script>
+</body>
+</html>

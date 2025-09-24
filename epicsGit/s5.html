@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snellen Chart Generator</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            background-color: white;
+            margin: 20px auto;
+            display: block;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+    <meta http-equiv="refresh"
+    content="5; url =C:\Users\hemuh\OneDrive\Desktop\java\epics\user.html" />
+</head>
+<body>
+    <h1>Snellen Chart Generator</h1>
+    <canvas id="chart" width="800" height="1200"></canvas>
+    <script>
+        // Get the canvas element and the context
+        var canvas = document.getElementById("chart");
+        var ctx = canvas.getContext("2d");
+
+        // Define the distance from the eye in meters
+        var distance = 6;
+
+        // Define the Snellen letter set
+        var letters = "CDEFHKLNOPRTUVZ";
+
+        // Define the visual angle for each row of the chart in arcminutes
+        var angles = [60, 36, 30, 24, 18, 12, 8, 5, 4];
+		
+		var theta = (2 * Math.PI / 360 / 60) * 5;
+
+        // Define the number of letters for each row of the chart
+        var counts = [1, 2, 3, 4, 5, 8, 12, 14, 15];
+
+        // Define the diagonal size of the monitor in inches
+        var monitorSize = 21;
+
+        // Calculate the PPI of the monitor based on the device pixel ratio, the screen width and height, and the monitor size
+        var ppi = window.devicePixelRatio * Math.sqrt(screen.width * screen.width + screen.height * screen.height) / monitorSize + 20;
+
+        // Define the font family for the letters
+        var font = "sans-serif";
+
+        // Define the font color for the letters
+        var color = "black";
+
+        // Define the vertical offset for the first row of the chart
+        var offset = 200;
+
+        // Loop through each row of the chart
+        for (var i = 0; i < angles.length; i++) {
+            // Calculate the font size for the current row based on the visual angle, the distance, and the PPI
+            //var size = distance * Math.tan(angles[i] / 60 * Math.PI / 180) * ppi * 50;
+            var size = angles[i] * Math.tan(theta / 2) * 40 * ppi
+
+            // Set the font property of the context
+            ctx.font = "bold " + size + "px " + font;
+
+            // Set the fill style of the context
+            ctx.fillStyle = color;
+
+            // Generate a random sequence of letters for the current row
+            var text = "";
+            for (var j = 0; j < counts[i]; j++) {
+                // Get a random index from the letter set
+                var index = Math.floor(Math.random() * letters.length);
+
+                // Append the letter to the text
+                text += "  " + letters[index] + "  ";
+            }
+
+            // Measure the width of the text
+            var width = ctx.measureText(text).width;
+
+            // Calculate the horizontal position of the text
+            var x = (canvas.width - width) / 2;
+
+            // Calculate the vertical position of the text
+            var y = offset + (size + 100) * i;
+
+            // Draw the text on the canvas      ,./background.jpg
+            ctx.fillText(text, x, y);
+        }
+    </script>
+</body>
+</html>
