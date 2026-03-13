@@ -58,6 +58,9 @@ Visual Acuity Test Pages
  │
  ▼
 Results & System Management
+
+🧱 Project Architecture
+
 VisualAcuity
 │
 └── epicsGit
