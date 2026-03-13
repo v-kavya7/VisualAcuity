@@ -71,6 +71,7 @@ VisualAcuity
     ├── s5.html
     ├── s20.html
     └── style.css
+    
 🛠️ Technologies Used
 Frontend
 
@@ -113,6 +114,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "visualacuity_db";
+
 ▶️ Running the Application
 
 Start Apache and MySQL in XAMPP.
@@ -130,6 +132,7 @@ Login Page
 User Dashboard
 Visual Test Page
 Admin Panel
+
 🚀 Future Improvements
 
 Add Snellen eye chart simulation
